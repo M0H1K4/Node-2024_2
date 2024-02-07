@@ -1,36 +1,22 @@
-const fs = require('fs')
-const http = require('http')
+const fs = require("fs");
+const http = require("http");
+const url = require("url");
 
+const server = http.createServer((req, res) => {
 
-/////////////////////////////////////////////////////////////
-//Files
+    const pathName = req.url;
+    if(pathName === '/' || pathName === "/overview"){
+        res.end('This is OVERVIEW');
+    } else if(pathName === './product'){
+        res.end('This is Product')
+    }else{
+        res.writeHead(404)
+        res.end("This page is not available")
+    }
 
-// Blocking, synchronous way
-// const textIn = fs.readFileSync('./txt/input.txt', 'utf-8')
-// console.log(textIn)
-// const textOut = `This is what we know about avocado: ${textIn}.\nCreated on ${Date.now()}`
-// fs.writeFileSync('./txt/output.txt', textOut)
-// console.log("File written!")
+  res.end("Hello from The server!");
+});
 
-// Non-blovking, asynchronous way
-// fs.readFile('./txt/start.txt', 'utf-8',  (err, data1) => {
-//     fs.readFile(`./txt/${data1}.txt`, 'utf-8',  (err, data2) => {
-//         console.log(data2)
-//     })
-// })
-
-// console.log('Will read file')
-
-
-
-
-//////////////////////////////
-//Server
-
-const server = http.createServer((req, res)=>{
-    res.end("Hello from The server!")
-})
-
-server.listen(8000, '127.0.0.1', () =>{
-    console.log("Listening to request on port 8000")
-})
+server.listen(8000, "127.0.0.1", () => {
+  console.log("Listening to request on port 8000");
+});
